@@ -4,12 +4,12 @@
 
 #define TAG @"\nMigrateLS"
 
-#define ORIG_FOLDER @"WebKit/LocalStorage"
-#define ORIG_LS_FILEPATH @"WebKit/LocalStorage/file__0.localstorage"
+#define ORIG_FOLDER @"WebKit/WebsiteData/LocalStorage"
+#define ORIG_LS_FILEPATH @"WebKit/WebsiteData/LocalStorage/http_localhost_8080.localstorage"
 #define ORIG_LS_CACHE @"Caches/file__0.localstorage"
 #define ORIG_IDB_FILEPATH @"WebKit/LocalStorage/___IndexedDB"
 
-#define TARGET_LS_FILEPATH @"WebKit/WebsiteData/LocalStorage/file__0.localstorage"
+#define TARGET_LS_FILEPATH @"WebKit/WebsiteData/LocalStorage/app_localhost_0.localstorage"
 #define TARGET_IDB_FILEPATH @"WebKit/WebsiteData/IndexedDB"
 
 @implementation MigrateLocalStorage
@@ -100,6 +100,9 @@ NSString* fallbackIfMissing(NSFileManager* fileManager, NSString* path, NSString
 
 void migrateLocalStorage(NSFileManager* fileManager, NSString* appLibraryFolder)
 {
+    NSArray* dirs = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:extendPath(appLibraryFolder, @"WebKit/WebsiteData/LocalStorage") error:Nil];
+    
+    NSLog(@"%@", dirs);
     NSString* original = fallbackIfMissing(fileManager,
         extendPath(appLibraryFolder, ORIG_LS_FILEPATH),
         extendPath(appLibraryFolder, ORIG_LS_CACHE)
